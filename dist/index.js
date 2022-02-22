@@ -7433,8 +7433,10 @@ function getSource(settings) {
                     yield authHelper.configureGlobalAuth();
                     core.endGroup();
                     // Clean existing submodules
-                    yield git.submoduleReset(settings.nestedSubmodules);
-                    yield git.submoduleClean(settings.nestedSubmodules);
+                    if (settings.clean) {
+                        yield git.submoduleReset(settings.nestedSubmodules);
+                        yield git.submoduleClean(settings.nestedSubmodules);
+                    }
                     // Checkout submodules
                     core.startGroup('Fetching submodules');
                     yield git.submoduleSync(settings.nestedSubmodules);
